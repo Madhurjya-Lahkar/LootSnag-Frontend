@@ -81,10 +81,17 @@ section, nav, footer { position: relative; z-index: 1; }
 
 [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+  transform: translateY(14px);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+  will-change: opacity, transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
-[data-reveal].visible { opacity: 1; transform: translateY(0); }
+[data-reveal].visible {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
 [data-d1] { transition-delay: 0.08s; }
 [data-d2] { transition-delay: 0.16s; }
 [data-d3] { transition-delay: 0.24s; }
@@ -280,7 +287,7 @@ nav {
   gap: 16px;
 }
 .embed-float { animation: float 6s ease-in-out infinite; }
-.embed-float-b { animation: float 6s ease-in-out infinite; animation-delay: 1.8s; transform: rotate(-0.8deg); }
+.embed-float-b { animation: float 6s ease-in-out infinite; animation-delay: 1.8s; }
 @keyframes float {
   0%,100% { transform: translateY(0) rotate(-0.8deg); }
   50% { transform: translateY(-14px) rotate(-0.8deg); }
@@ -398,6 +405,7 @@ nav {
   border-radius: 10px 10px 0 0;
   overflow-x: auto;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 .cmd-tabs-outer::-webkit-scrollbar { display: none; }
 .cmd-tab {
@@ -418,13 +426,15 @@ nav {
 .cmd-tab:hover { color: var(--tx); background: rgba(255,255,255,0.03); }
 .cmd-tab.active { color: var(--lime); border-bottom-color: var(--lime); background: rgba(183,255,0,0.04); }
 
-.discord-win { max-width: 100%; overflow: hidden;
+.discord-win {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
   background: var(--dc-bg);
   border: 1px solid var(--dc-line);
   border-top: none;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 24px 64px rgba(0,0,0,0.45);
-  overflow: hidden;
 }
 .dc-channel-bar {
   background: #1e1f22;
@@ -438,12 +448,12 @@ nav {
   color: #e0e0e0;
 }
 .dc-channel-hash { color: #888; font-size: 17px; }
-.dc-body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.dc-body { padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
 
 .cmd-panel { display: none; flex-direction: column; gap: 14px; }
 .cmd-panel.active { display: flex; }
 
-.dc-msg { display: flex; gap: 12px; min-width: 0; }
+.dc-msg { display: flex; gap: 12px; min-width: 0; overflow: hidden; }
 .dc-av {
   width: 36px; height: 36px;
   border-radius: 50%;
@@ -462,11 +472,13 @@ nav {
 .dc-text { font-size: 13.5px; color: #d4d7dc; line-height: 1.5; }
 .dc-slash { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #1a1b1e; color: var(--lime); padding: 1px 6px; border-radius: 3px; }
 
-.multi-embeds { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; min-width: 0; overflow: hidden; }
+.multi-embeds { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; min-width: 0; overflow: hidden; width: 100%; }
 
 .dc-embed {
   border-radius: 0 5px 5px 0;
   overflow: hidden;
+  min-width: 0;
+  width: 100%;
 }
 .dc-embed-deal { background: #2b2d31; border-left: 3px solid #2ecc71; }
 .dc-embed-free { background: #2b2d31; border-left: 3px solid var(--lime); }
@@ -474,17 +486,16 @@ nav {
 .dc-embed-unwish { background: #2b2d31; border-left: 3px solid #e74c3c; padding: 11px 13px; border-radius: 0 5px 5px 0; }
 .dc-embed-list { background: #2b2d31; border-left: 3px solid #7289da; padding: 11px 13px; border-radius: 0 5px 5px 0; }
 
-.dc-embed-row { display: flex; flex-direction: column; }
-.dc-embed-text { padding: 11px 13px 0; }
+.dc-embed-row { display: flex; flex-direction: column; width: 100%; }
+.dc-embed-text { padding: 11px 13px 0; min-width: 0; }
 .dc-embed-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12.5px; color: #fff; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
 .dc-embed-game { font-weight: 600; font-size: 12px; color: #fff; margin-bottom: 5px; }
-.dc-embed-field { font-size: 11.5px; color: #b5bac1; margin-bottom: 2px; line-height: 1.5; word-break: break-word; }
+.dc-embed-field { font-size: 11.5px; color: #b5bac1; margin-bottom: 2px; line-height: 1.5; word-break: break-word; overflow-wrap: break-word; }
 .dc-embed-field b { color: #ddd; font-weight: 600; }
-.dc-embed-thumb {
-  display: none;
-}
+.dc-embed-thumb { display: none; }
 .dc-embed-banner-img {
   width: 100%;
+  max-width: 100%;
   height: 110px;
   object-fit: cover;
   display: block;
@@ -492,7 +503,7 @@ nav {
   margin-top: 2px;
 }
 .dc-embed-btns { display: flex; gap: 5px; padding: 8px 13px 11px; flex-wrap: wrap; }
-.dc-embed-btn { font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; background: #4e505a; color: #e0e0e0; }
+.dc-embed-btn { font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; background: #4e505a; color: #e0e0e0; white-space: nowrap; }
 .dc-embed-body-simple { padding: 11px 13px; }
 .dc-embed-body-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12.5px; color: #fff; margin-bottom: 5px; }
 .dc-embed-body-text { font-size: 11.5px; color: #b5bac1; line-height: 1.6; }
@@ -593,7 +604,7 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   .hero-inner { gap: 32px; padding: 52px 0 48px; }
   .embeds-col { flex-direction: column; }
   .embed-card { width: 100%; max-width: 100%; }
-  .trust-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: repeat(2,1fr); }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
   .footer-copy { font-size: 11px; }
   .hero-title { font-size: 34px; }
@@ -607,9 +618,12 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   .cmd-item { padding: 16px 18px; }
   .cmd-right-label { font-size: 26px; margin-bottom: 28px; }
   .discord-win { max-width: 100%; overflow: hidden; border-radius: 0 0 8px 8px; }
-  .dc-embed-thumb { width: 52px; height: 52px; }
-  .dc-body { padding: 14px; }
+  .dc-body { padding: 12px; }
   .trust-card { padding: 24px 20px; }
+  .dc-embed-btns { gap: 4px; padding: 6px 10px 10px; }
+  .dc-embed-btn { font-size: 10px; padding: 4px 7px; }
+  .dc-embed-text { padding: 10px 10px 0; }
+  .dc-embed-banner-img { height: 90px; }
 }
 @media (max-width: 400px) {
   .wrap { padding: 0 12px; }
@@ -619,6 +633,7 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   .hero-eyebrow { font-size: 11px; }
   #features, #commands, #trust { padding: 48px 0; }
   .feat-card { padding: 20px; }
+  .trust-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -668,7 +683,7 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
         </p>
         <div class="hero-actions" data-reveal data-d3>
           <a href="https://discord.com/oauth2/authorize?client_id=1508171200289968178&permissions=412317248512&integration_type=0&scope=bot+applications.commands" class="btn-primary" target="_blank" rel="noopener">
-            <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.030z"/></svg>
             Add to Discord
           </a>
           <a href="https://github.com/Madhurjya-Lahkar/LootSnag" class="btn-ghost" target="_blank" rel="noopener">
@@ -1097,75 +1112,91 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
 </footer>
 
 <script>
-const revealEls = document.querySelectorAll('[data-reveal]');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-  });
-}, { threshold: 0.05 });
-revealEls.forEach(el => observer.observe(el));
-requestAnimationFrame(() => {
-  revealEls.forEach(el => {
-    const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight && r.bottom > 0) {
-      el.classList.add('visible');
-      observer.unobserve(el);
-    }
-  });
-});
+(function () {
+  var revealEls = document.querySelectorAll('[data-reveal]');
 
-document.querySelectorAll('.cmd-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.cmd-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.cmd-panel').forEach(p => p.classList.remove('active'));
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -20px 0px' });
+
+  function checkVisible() {
+    var vh = window.innerHeight;
+    revealEls.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < vh && r.bottom > 0) {
+        el.classList.add('visible');
+      } else {
+        observer.observe(el);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(checkVisible, 60);
+    });
+  } else {
+    setTimeout(checkVisible, 60);
+  }
+}());
+
+document.querySelectorAll('.cmd-tab').forEach(function (tab) {
+  tab.addEventListener('click', function () {
+    document.querySelectorAll('.cmd-tab').forEach(function (t) { t.classList.remove('active'); });
+    document.querySelectorAll('.cmd-panel').forEach(function (p) { p.classList.remove('active'); });
     tab.classList.add('active');
-    const panel = document.getElementById('panel-' + tab.dataset.cmd);
+    var panel = document.getElementById('panel-' + tab.dataset.cmd);
     if (panel) panel.classList.add('active');
   });
 });
 
-document.querySelectorAll('.feat-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+document.querySelectorAll('.feat-card').forEach(function (card) {
+  card.addEventListener('mousemove', function (e) {
+    var r = card.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width - 0.5;
+    var y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = 'perspective(800px) rotateY(' + (x * 4) + 'deg) rotateX(' + (-y * 4) + 'deg)';
   });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  card.addEventListener('mouseleave', function () { card.style.transform = ''; });
 });
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  const section = document.querySelector(link.getAttribute('href'));
+document.querySelectorAll('.nav-links a').forEach(function (link) {
+  var section = document.querySelector(link.getAttribute('href'));
   if (!section) return;
-  new IntersectionObserver(entries => {
-    entries.forEach(e => {
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
       if (e.isIntersecting) {
-        document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('nav-active'));
+        document.querySelectorAll('.nav-links a').forEach(function (l) { l.classList.remove('nav-active'); });
         link.classList.add('nav-active');
       }
     });
   }, { threshold: 0.5 }).observe(section);
 });
 
-const hamburger = document.getElementById('navHamburger');
-const drawer = document.getElementById('navDrawer');
-hamburger.addEventListener('click', () => {
-  const isOpen = drawer.classList.toggle('open');
+var hamburger = document.getElementById('navHamburger');
+var drawer = document.getElementById('navDrawer');
+hamburger.addEventListener('click', function () {
+  var isOpen = drawer.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
 });
-document.querySelectorAll('.nav-drawer-link').forEach(link => {
-  link.addEventListener('click', () => {
+document.querySelectorAll('.nav-drawer-link').forEach(function (link) {
+  link.addEventListener('click', function () {
     drawer.classList.remove('open');
     hamburger.classList.remove('open');
     hamburger.setAttribute('aria-expanded', 'false');
   });
 });
 
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
+document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+  link.addEventListener('click', function (e) {
     e.preventDefault();
-    const target = document.querySelector(link.getAttribute('href'));
+    var target = document.querySelector(link.getAttribute('href'));
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
       history.replaceState(null, '', ' ');
