@@ -1138,6 +1138,17 @@ document.querySelectorAll('.nav-drawer-link').forEach(link => {
     hamburger.setAttribute('aria-expanded', 'false');
   });
 });
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      history.replaceState(null, '', ' ');
+    }
+  });
+});
 </script>
 </body>
 </html>
