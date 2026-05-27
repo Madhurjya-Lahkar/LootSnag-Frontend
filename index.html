@@ -593,7 +593,6 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   .hero-inner { gap: 32px; padding: 52px 0 48px; }
   .embeds-col { flex-direction: column; }
   .embed-card { width: 100%; max-width: 100%; }
-  .embed-float, .embed-float-b { animation: none; transform: none; }
   .trust-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
   .footer-copy { font-size: 11px; }
@@ -1098,12 +1097,22 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
 </footer>
 
 <script>
+const revealEls = document.querySelectorAll('[data-reveal]');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -28px 0px' });
-document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+}, { threshold: 0.05 });
+revealEls.forEach(el => observer.observe(el));
+requestAnimationFrame(() => {
+  revealEls.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) {
+      el.classList.add('visible');
+      observer.unobserve(el);
+    }
+  });
+});
 
 document.querySelectorAll('.cmd-tab').forEach(tab => {
   tab.addEventListener('click', () => {
