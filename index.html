@@ -280,7 +280,7 @@ nav {
   gap: 16px;
 }
 .embed-float { animation: float 6s ease-in-out infinite; }
-.embed-float-b { animation: float 6s ease-in-out infinite; animation-delay: 1.8s; }
+.embed-float-b { animation: float 6s ease-in-out infinite; animation-delay: 1.8s; transform: rotate(-0.8deg); }
 @keyframes float {
   0%,100% { transform: translateY(0) rotate(-0.8deg); }
   50% { transform: translateY(-14px) rotate(-0.8deg); }
@@ -580,6 +580,7 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   .nav-hamburger { display: flex; }
   .hero-inner { grid-template-columns: 1fr; gap: 48px; padding: 80px 0 60px; }
   .embeds-col { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+  .embed-card { width: calc(50% - 8px); }
   .feat-grid { grid-template-columns: 1fr; }
   .cmd-layout { grid-template-columns: 1fr; gap: 40px; }
   .trust-grid { grid-template-columns: repeat(2,1fr); }
@@ -589,12 +590,15 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   nav { padding: 0 16px; }
   .embeds-col { flex-direction: column; }
   .embed-card { width: 100%; max-width: 100%; }
+  .embed-float, .embed-float-b { animation: none; transform: rotate(-0.8deg); }
   .trust-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
   .footer-copy { font-size: 11px; }
   .hero-title { font-size: 36px; }
   .hero-sub { font-size: 15px; }
-  #features, #commands, #trust { padding: 72px 0; }
+  .hero-actions { flex-wrap: wrap; gap: 12px; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+  #features, #commands, #trust { padding: 64px 0; }
   .feat-card { padding: 28px; }
   .cmd-item { padding: 18px 20px; }
   .cmd-right-label { font-size: 26px; }
@@ -607,6 +611,8 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   nav { padding: 0 12px; }
   .cmd-tab { padding: 10px 10px; font-size: 11px; }
   .hero-title { font-size: 32px; }
+  .hero-eyebrow { font-size: 11px; }
+  #features, #commands, #trust { padding: 52px 0; }
 }
 </style>
 </head>
@@ -820,7 +826,7 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <div class="feat-name">Multi-Platform</div>
-        <p class="feat-desc">Epic Games, Steam, GOG, Ubisoft — all in one place.</p>
+        <p class="feat-desc">Epic Games, Steam, GOG, Ubisoft — all in one place. Choose exactly which stores matter to your server.</p>
       </div>
     </div>
   </div>
