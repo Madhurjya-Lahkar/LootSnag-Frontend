@@ -41,7 +41,7 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
@@ -418,7 +418,7 @@ nav {
 .cmd-tab:hover { color: var(--tx); background: rgba(255,255,255,0.03); }
 .cmd-tab.active { color: var(--lime); border-bottom-color: var(--lime); background: rgba(183,255,0,0.04); }
 
-.discord-win {
+.discord-win { max-width: 100%; overflow: hidden;
   background: var(--dc-bg);
   border: 1px solid var(--dc-line);
   border-top: none;
@@ -443,7 +443,7 @@ nav {
 .cmd-panel { display: none; flex-direction: column; gap: 14px; }
 .cmd-panel.active { display: flex; }
 
-.dc-msg { display: flex; gap: 12px; }
+.dc-msg { display: flex; gap: 12px; min-width: 0; }
 .dc-av {
   width: 36px; height: 36px;
   border-radius: 50%;
@@ -456,13 +456,13 @@ nav {
   overflow: hidden;
 }
 .dc-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.dc-content { flex: 1; }
+.dc-content { flex: 1; min-width: 0; overflow: hidden; }
 .dc-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
 .dc-app-tag { display: inline-block; background: #5865f2; color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
 .dc-text { font-size: 13.5px; color: #d4d7dc; line-height: 1.5; }
 .dc-slash { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #1a1b1e; color: var(--lime); padding: 1px 6px; border-radius: 3px; }
 
-.multi-embeds { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.multi-embeds { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; min-width: 0; overflow: hidden; }
 
 .dc-embed {
   border-radius: 0 5px 5px 0;
@@ -478,7 +478,7 @@ nav {
 .dc-embed-text { padding: 11px 13px 0; }
 .dc-embed-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12.5px; color: #fff; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
 .dc-embed-game { font-weight: 600; font-size: 12px; color: #fff; margin-bottom: 5px; }
-.dc-embed-field { font-size: 11.5px; color: #b5bac1; margin-bottom: 2px; line-height: 1.5; }
+.dc-embed-field { font-size: 11.5px; color: #b5bac1; margin-bottom: 2px; line-height: 1.5; word-break: break-word; }
 .dc-embed-field b { color: #ddd; font-weight: 600; }
 .dc-embed-thumb {
   display: none;
@@ -496,7 +496,7 @@ nav {
 .dc-embed-body-simple { padding: 11px 13px; }
 .dc-embed-body-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12.5px; color: #fff; margin-bottom: 5px; }
 .dc-embed-body-text { font-size: 11.5px; color: #b5bac1; line-height: 1.6; }
-.dc-embed-list-item { font-size: 11.5px; color: #b5bac1; padding: 3px 0; border-bottom: 1px solid #3a3c40; }
+.dc-embed-list-item { font-size: 11.5px; color: #b5bac1; padding: 3px 0; border-bottom: 1px solid #3a3c40; word-break: break-word; }
 .dc-embed-list-item:last-child { border-bottom: none; }
 
 .cmd-right-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(26px,3vw,38px); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 40px; }
@@ -578,7 +578,9 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   nav { padding: 0 24px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
-  .hero-inner { grid-template-columns: 1fr; gap: 48px; padding: 80px 0 60px; }
+  .nav-cta { display: none; }
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 72px 0 56px; }
+  #hero { min-height: auto; align-items: flex-start; }
   .embeds-col { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
   .embed-card { width: calc(50% - 8px); }
   .feat-grid { grid-template-columns: 1fr; }
@@ -588,31 +590,36 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
 @media (max-width: 600px) {
   .wrap { padding: 0 16px; }
   nav { padding: 0 16px; }
+  .hero-inner { gap: 32px; padding: 52px 0 48px; }
   .embeds-col { flex-direction: column; }
   .embed-card { width: 100%; max-width: 100%; }
-  .embed-float, .embed-float-b { animation: none; transform: rotate(-0.8deg); }
+  .embed-float, .embed-float-b { animation: none; transform: none; }
   .trust-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
   .footer-copy { font-size: 11px; }
-  .hero-title { font-size: 36px; }
-  .hero-sub { font-size: 15px; }
-  .hero-actions { flex-wrap: wrap; gap: 12px; }
-  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
-  #features, #commands, #trust { padding: 64px 0; }
-  .feat-card { padding: 28px; }
-  .cmd-item { padding: 18px 20px; }
-  .cmd-right-label { font-size: 26px; }
-  .discord-win { border-radius: 0 0 8px 8px; }
+  .hero-title { font-size: 34px; }
+  .hero-sub { font-size: 15px; margin-bottom: 32px; }
+  .hero-actions { flex-direction: column; gap: 10px; }
+  .btn-primary { width: 100%; justify-content: center; }
+  .btn-ghost { padding: 13px 0; }
+  #features, #commands, #trust { padding: 60px 0; }
+  .feat-card { padding: 24px; }
+  .feat-name { font-size: 15px; }
+  .cmd-item { padding: 16px 18px; }
+  .cmd-right-label { font-size: 26px; margin-bottom: 28px; }
+  .discord-win { max-width: 100%; overflow: hidden; border-radius: 0 0 8px 8px; }
   .dc-embed-thumb { width: 52px; height: 52px; }
   .dc-body { padding: 14px; }
+  .trust-card { padding: 24px 20px; }
 }
 @media (max-width: 400px) {
   .wrap { padding: 0 12px; }
   nav { padding: 0 12px; }
   .cmd-tab { padding: 10px 10px; font-size: 11px; }
-  .hero-title { font-size: 32px; }
+  .hero-title { font-size: 30px; }
   .hero-eyebrow { font-size: 11px; }
-  #features, #commands, #trust { padding: 52px 0; }
+  #features, #commands, #trust { padding: 48px 0; }
+  .feat-card { padding: 20px; }
 }
 </style>
 </head>
@@ -643,6 +650,7 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   <a href="#features" class="nav-drawer-link">Features</a>
   <a href="#commands" class="nav-drawer-link">Commands</a>
   <a href="#trust" class="nav-drawer-link">Support</a>
+  <a href="https://discord.com/oauth2/authorize?client_id=1508171200289968178&permissions=412317248512&integration_type=0&scope=bot+applications.commands" class="nav-drawer-link" target="_blank" rel="noopener" style="color:var(--lime);font-weight:700">Add to Discord ↗</a>
 </div>
 
 <section id="hero">
@@ -826,7 +834,7 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <div class="feat-name">Multi-Platform</div>
-        <p class="feat-desc">Epic Games, Steam, GOG, Ubisoft — all in one place. Choose exactly which stores matter to your server.</p>
+        <p class="feat-desc">Epic Games, Steam, GOG, Ubisoft — all in one place.</p>
       </div>
     </div>
   </div>
