@@ -287,7 +287,7 @@ nav {
   gap: 16px;
 }
 .embed-float { animation: float 6s ease-in-out infinite; }
-.embed-float-b { animation: float 6s ease-in-out infinite; animation-delay: 1.8s; }
+.embed-float-b { transform: translateY(0) rotate(-0.8deg); animation: float 6s ease-in-out infinite 1.8s; will-change: transform; }
 @keyframes float {
   0%,100% { transform: translateY(0) rotate(-0.8deg); }
   50% { transform: translateY(-14px) rotate(-0.8deg); }
@@ -400,14 +400,13 @@ nav {
 
 .cmd-tabs-outer {
   display: flex;
-  gap: 0;
+  flex-wrap: wrap;
+  gap: 6px;
   border-bottom: 1px solid var(--dc-line);
   background: #1a1b1e;
   border-radius: 10px 10px 0 0;
-  overflow-x: auto;
-  overflow-y: visible;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible;
+  padding: 6px;
   width: 100%;
   max-width: 100%;
 }
@@ -619,6 +618,15 @@ footer { border-top: 1px solid var(--b1); padding: 36px 0; }
   #features, #commands, #trust { padding: 60px 0; }
   .feat-card { padding: 24px; }
   .feat-name { font-size: 15px; }
+  .cmd-tabs-outer {
+    flex-wrap: nowrap;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
   .cmd-item { padding: 16px 18px; }
   .cmd-right-label { font-size: 26px; margin-bottom: 28px; }
   .discord-win { max-width: 100%; overflow: hidden; border-radius: 0 0 8px 8px; }
